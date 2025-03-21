@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {  
-    // Отключаем масштабирование при двойном тапе  
+    // Блокируем масштабирование при двойном тапе  
     let lastTouchEnd = 0;  
     document.addEventListener('touchend', function(event) {  
         const now = (new Date()).getTime();  
@@ -8,6 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }  
         lastTouchEnd = now;  
     }, false);  
+
+    // Блокируем масштабирование при жестах двумя пальцами  
+    document.addEventListener('touchmove', function(event) {  
+        if (event.scale !== 1) {  
+            event.preventDefault();  
+        }  
+    }, { passive: false });  
 
     // Переключение на вторую вкладку  
     const tab1 = document.getElementById('tab1');  
